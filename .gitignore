@@ -185,3 +185,4 @@ misc/onnx-export/models/*onnx
 /.idea/vcs.xml
 
 examples/javascript/node_modules/
+.idea/
