@@ -1,16 +1,18 @@
-import pytest
 from fastapi.testclient import TestClient
+import pytest
 
 from speaches.main import create_app
 
+type TestClientType = TestClient
+
 
 @pytest.fixture
-def client():
+def client() -> TestClientType:
     app = create_app()
     return TestClient(app)
 
 
-def test_translation_endpoint_basic(client):
+def test_translation_endpoint_basic(client: TestClientType) -> None:
     """Test basic translation endpoint functionality."""
     response = client.post(
         "/v1/translations",
@@ -31,7 +33,7 @@ def test_translation_endpoint_basic(client):
     assert len(data["text"]) > 0
 
 
-def test_translation_endpoint_missing_text(client):
+def test_translation_endpoint_missing_text(client: TestClientType) -> None:
     """Test translation endpoint with missing text parameter."""
     response = client.post(
         "/v1/translations",
@@ -42,7 +44,7 @@ def test_translation_endpoint_missing_text(client):
     assert response.status_code == 422
 
 
-def test_translation_endpoint_missing_model(client):
+def test_translation_endpoint_missing_model(client: TestClientType) -> None:
     """Test translation endpoint with missing model parameter."""
     response = client.post(
         "/v1/translations",
@@ -53,7 +55,7 @@ def test_translation_endpoint_missing_model(client):
     assert response.status_code == 422
 
 
-def test_translation_endpoint_custom_languages(client):
+def test_translation_endpoint_custom_languages(client: TestClientType) -> None:
     """Test translation endpoint with custom source and target languages."""
     response = client.post(
         "/v1/translations",
@@ -70,7 +72,7 @@ def test_translation_endpoint_custom_languages(client):
     assert data["target_language"] == "zh"
 
 
-def test_translation_endpoint_empty_text(client):
+def test_translation_endpoint_empty_text(client: TestClientType) -> None:
     """Test translation endpoint with empty text."""
     response = client.post(
         "/v1/translations",
@@ -84,7 +86,7 @@ def test_translation_endpoint_empty_text(client):
 
 
 @pytest.mark.skip(reason="Requires actual model download and conversion")
-def test_translation_endpoint_real_model(client):
+def test_translation_endpoint_real_model(client: TestClientType) -> None:
     """Test translation endpoint with a real model (requires model download)."""
     response = client.post(
         "/v1/translations",

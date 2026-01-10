@@ -7,9 +7,7 @@ from pydantic import BaseModel, ConfigDict
 
 from speaches.api_types import TimestampGranularities
 from speaches.audio import Audio
-
 from speaches.executors.silero_vad_v5 import SpeechTimestamp, VadOptions
-
 
 MimeType = str
 

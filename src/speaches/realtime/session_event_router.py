@@ -71,7 +71,7 @@ def handle_session_update_event(ctx: SessionContext, event: SessionUpdateEvent) 
             if hasattr(event.session.input_audio_transcription, "model"):
                 event.session.input_audio_transcription.model = stt_model
         except ValueError as e:
-            logger.error(f"Failed to parse model parameter: {e}")
+            logger.exception("Failed to parse model parameter")
             ctx.pubsub.publish_nowait(
                 ErrorEvent(
                     error=Error(

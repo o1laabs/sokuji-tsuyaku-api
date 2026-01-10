@@ -45,7 +45,7 @@ class AudioStreamTrack(MediaStreamTrack):
         except asyncio.CancelledError:
             # Don't chain the exception to avoid noisy stack traces in aiortc logs
             self._running = False
-            raise MediaStreamError("Track has ended")  # noqa: EM101
+            raise MediaStreamError("Track has ended") from None  # noqa: EM101
         else:
             return frame
 
