@@ -29,9 +29,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=SecretStr("test-api-key"),
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         # Should not raise exception
         await verify_websocket_api_key(mock_ws, config)
@@ -47,9 +45,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=SecretStr("test-api-key"),
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         await verify_websocket_api_key(mock_ws, config)
 
@@ -64,9 +60,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=SecretStr("test-api-key"),
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         await verify_websocket_api_key(mock_ws, config)
 
@@ -81,9 +75,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=None,  # No API key configured
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         # Should not raise exception when no API key is configured
         await verify_websocket_api_key(mock_ws, config)
@@ -101,9 +93,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=SecretStr("correct-key"),
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         with pytest.raises(WebSocketException):
             await verify_websocket_api_key(mock_ws, config)
@@ -121,9 +111,7 @@ class TestRealtimeWebSocketAuthentication:
             api_key=SecretStr("required-key"),
             whisper=WhisperConfig(),
             enable_ui=False,
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         with pytest.raises(WebSocketException):
             await verify_websocket_api_key(mock_ws, config)
@@ -200,8 +188,6 @@ class TestRealtimeWebSocketEndpoint:
 
     def test_websocket_endpoint_exists(self, mocker: MockerFixture) -> None:
         """Test that WebSocket endpoint is properly registered."""
-        from pydantic import SecretStr
-
         from speaches.config import Config, WhisperConfig
 
         # Create config without UI to avoid gradio dependency
@@ -209,9 +195,7 @@ class TestRealtimeWebSocketEndpoint:
             api_key=None,
             whisper=WhisperConfig(),
             enable_ui=False,  # Disable UI to avoid gradio import
-            chat_completion_base_url="https://api.openai.com/v1",
-            chat_completion_api_key=SecretStr("test-key"),
-        )
+                    )
 
         # Mock get_config before create_app is called
         mocker.patch("speaches.main.get_config", return_value=config)
