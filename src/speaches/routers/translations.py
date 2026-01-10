@@ -1,12 +1,10 @@
 import logging
 from typing import Annotated
 
-from fastapi import APIRouter, Form, HTTPException
+from fastapi import APIRouter, Form
 from fastapi.responses import JSONResponse
 
 from speaches.dependencies import ExecutorRegistryDependency
-from speaches.executors.marian import MarianModelManager
-from speaches.executors.nllb import NllbModelManager
 from speaches.executors.shared.handler_protocol import TextTranslationRequest
 from speaches.model_aliases import ModelId
 from speaches.routers.utils import find_executor_for_model_or_raise, get_model_card_data_or_raise
@@ -43,20 +41,16 @@ async def translate_text(
 
     executor = find_executor_for_model_or_raise(model, model_card_data, executor_registry.translation, model_tags)
 
-    if isinstance(executor.model_manager, MarianModelManager | NllbModelManager):
-        translation_request = TextTranslationRequest(
-            text=text,
-            model=model,
-            source_language=source_language,
-            target_language=target_language,
-        )
+    translation_request = TextTranslationRequest(
+        text=text,
+        model=model,
+        source_language=source_language,
+        target_language=target_language,
+    )
 
-        response = executor.model_manager.handle_text_translation_request(translation_request)
+    response = executor.model_manager.handle_text_translation_request(translation_request)
 
-        return JSONResponse(
-            content=response.model_dump(),
-            media_type="application/json",
-        )
-
-    msg = f"Unsupported model type for {model}"
-    raise HTTPException(status_code=500, detail=msg)
+    return JSONResponse(
+        content=response.model_dump(),
+        media_type="application/json",
+    )
