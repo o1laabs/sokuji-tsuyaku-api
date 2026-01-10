@@ -2696,7 +2696,7 @@ requires-dist = [
     { name = "anyio", marker = "extra == 'dev'", specifier = ">=4.9.0" },
     { name = "basedpyright", marker = "extra == 'dev'", specifier = ">=1.33.0" },
     { name = "cachetools", specifier = ">=6.1.0" },
-    { name = "ctranslate2", specifier = "==4.6.0" },
+    { name = "ctranslate2", specifier = ">=4.6.0" },
     { name = "datamodel-code-generator", marker = "extra == 'dev'", specifier = ">=0.31.2" },
     { name = "fastapi", specifier = ">=0.121.1" },
     { name = "faster-whisper", specifier = ">=1.1.1" },
