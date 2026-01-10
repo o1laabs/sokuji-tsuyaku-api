@@ -9,7 +9,9 @@ from pydantic import BaseModel, Field
 from speaches.api_types import (
     DEFAULT_SPEECH_RESPONSE_FORMAT,
     MAX_SPEECH_SAMPLE_RATE,
+    MAX_SPEECH_SPEED,
     MIN_SPEECH_SAMPLE_RATE,
+    MIN_SPEECH_SPEED,
     SpeechAudioDeltaEvent,
     SpeechAudioDoneEvent,
     SpeechAudioTokenUsage,
@@ -57,7 +59,7 @@ class CreateSpeechRequestBody(BaseModel):
     voice: str
     response_format: SpeechResponseFormat = DEFAULT_SPEECH_RESPONSE_FORMAT
     # https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-voice
-    speed: float = 1.0
+    speed: float = Field(1.0, ge=MIN_SPEECH_SPEED, le=MAX_SPEECH_SPEED)
     """The speed of the generated audio. 1.0 is the default. Different models have different supported speed ranges."""
     stream_format: Literal["audio", "sse"] = "audio"
     """The format to stream the audio in. Supported formats are sse and audio"""
@@ -120,7 +122,7 @@ def synthesize(
             media_type=response_format_to_mime_type(body.response_format),
         )
     except ValueError as e:
-        if "speed must be between" in str(e):
+        if "speed must be between" in str(e).lower():
             logger.warning("Unsupported speed value requested for speech synthesis")
             raise HTTPException(status_code=422, detail=str(e)) from e
         raise

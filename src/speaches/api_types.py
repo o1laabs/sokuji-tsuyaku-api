@@ -20,6 +20,12 @@ SUPPORTED_SPEECH_RESPONSE_FORMATS = ("pcm", "mp3", "wav", "flac", "opus", "aac")
 MIN_SPEECH_SAMPLE_RATE = 8000
 MAX_SPEECH_SAMPLE_RATE = 48000
 
+# Speed range based on OpenAI API and model capabilities
+# Piper: 0.25-4.0, Kokoro: 0.5-2.0
+# Using most permissive range; individual models may have stricter limits
+MIN_SPEECH_SPEED = 0.25
+MAX_SPEECH_SPEED = 4.0
+
 
 # https://github.com/openai/openai-openapi/blob/master/openapi.yaml#L11146
 class Model(BaseModel):
